@@ -11,7 +11,7 @@ import netaudit.audit as audit
 import netaudit.config as config
 #import netaudit.test as auditTests
 
-TEST_TEMPLATE = '/repos/judoon/configs/tests3.yaml'
+TEST_TEMPLATE = 'configs/tests3.yaml'
 
 class Judoon(ShellUI):
     """
@@ -21,7 +21,7 @@ class Judoon(ShellUI):
     helpattr = {
         'argparseattr': {
             'description': ('This is a validation script to ensure that the '
-                            'network configuration is correction.')
+                            'network configuration is correct.')
     },
       'args': [
             [['switch'], {'help': 'Required: The name or IP of the switch to '
@@ -43,10 +43,12 @@ class Judoon(ShellUI):
             auditor = audit.AuditTests(config=conf, tests=tests,
                                                 test_group=self.args.testGroup)
             auditor.run()
+            print("Running test for {}".format(self.args.switch))
             for test in auditor.last_results:
                 result = 'OK' if test.result else 'FAIL'
+                print("-" *25)
                 print('%s: %s' % (test.name, result))
-
+                print("-" *25)
 
 
 
